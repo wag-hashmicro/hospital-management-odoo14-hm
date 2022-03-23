@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="action_hospital_doctor" model="ir.actions.act_window">
+        <field name="name">Doctors</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.doctor</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first doctor !
+            </p>
+        </field>
+    </record>
+
+    <record id="action_hospital_nurse" model="ir.actions.act_window">
+        <field name="name">Nurses</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.nurse</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first nurse !
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_employees_root"
+        name="Employees"
+        parent="menu_hospital_root"
+        sequence="20"/>
+
+    <menuitem id="menu_doctor"
+        name="Doctors"
+        parent="menu_employees_root"
+        action="action_hospital_doctor"
+        sequence="10"/>
+
+    <menuitem id="menu_nurse"
+        name="Nurses"
+        parent="menu_employees_root"
+        action="action_hospital_nurse"
+        sequence="20"/>
+</odoo>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form create="false">
+				<header>
+                    <button id="button_create_appointment" 
+					name="%(contacts.action_contacts)d"
+					string="Create Responsible" class="btn-secondary" type="action"/>
+
+					<button id="button_confirm" name="action_confirm" confirm="Are you sure that need to Confirm ?"
+					string="Confirm" class="btn-primary" type="object" states="draft"/>
+					
+					<button id="button_done" name="action_done" confirm="Are you sure that need to Mark as Done ?"
+					string="Mark As Done" class="btn-primary" type="object" states="confirm"/>
+					
+					<button id="button_draft" name="action_draft" confirm="Are you sure that need to Set to Draft ?"
+					string="Set To Draft" class="btn-primary" type="object" states="cancel"/>
+					
+					<button id="button_cancel" name="action_cancel" confirm="Are you sure that need to Cancel ?"
+					string="Cancel" type="object" states="draft,done,confirm"/>
+					
+					<field name="state" widget="statusbar" statusbar_visible="draft,done,confirm"/>
+				</header>			
+                <sheet>
+                    <field name="patient_image" widget="image" class="oe_avatar"/>
+					<div class="oe_title">
+						<h1>
+							<field name="order_reference" readonly="1"/>
+						</h1>
+					</div>
+                    <group>
+                        <group>
+						    <field name="patient_id" widget="selection"/>
+							<field name="responsible_id" widget="selection"/>
+							<field name="gender"/>
+							<field name="age"/>
+                        </group>
+                        <group>
+							<field name="date_appointment"/>
+							<field name="date_checkup"/>
+                            <field name="doctor_id"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                </sheet>
+				<div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+	
+	<record id="view_appointment_kanban" model="ir.ui.view">
+        <field name="name">hospital.appointment.kanban</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <kanban sample="1"
+            group_create="false" 
+            group_edit="false" 
+            group_delete="false"
+            quick_create="false"
+            archivable="false"
+            class="o_kanban_mobile"
+            default_group_by="doctor_id">
+				<templates>
+					<t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <field name="patient_image" widget="image"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <field name="patient_id"/>
+                                </strong>
+                                <ul>
+                                    <li>
+                                        <field name="date_checkup"/>
+                                    </li>
+                                    <li>
+                                        <field name="state"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+					</t>
+				</templates>
+			</kanban>
+        </field>
+    </record>
+
+    <record id="view_appointment_tree" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree sample="1" 
+            decoration-info="state=='confirm'" 
+            decoration-success="state=='done'" 
+            decoration-danger="state=='cancel'" 
+            decoration-muted="state=='draft'"
+            create="false">
+                <header>
+                    <button name="action_confirm" string="Confirm" class="btn-primary ml4" type="object"/>
+                    <button name="action_done" string="Done" class="btn-primary ml4" type="object"/>
+                    <button name="action_cancel" string="Cancel" class="btn-danger ml4" type="object"/>
+                </header>
+                <field name="order_reference"/>
+				<field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="note"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+	
+    <record id="action_appointment_patient" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first appointment !
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_appointment_root"
+        name="Appointments"
+        parent="menu_hospital_root"
+        sequence="30"/>
+
+    <menuitem id="menu_appointment"
+        name="Appointments"
+        parent="menu_appointment_root"
+        action="action_appointment_patient"
+        sequence="10"/> 
+</odoo>

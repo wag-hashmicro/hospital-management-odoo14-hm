@@ -1,0 +1,28 @@
+{
+    'name' : 'Hospital Management',
+    'author' : 'W A Geraldine',
+    'summary' : 'Hospital Management Software',
+    'version' : '1.0',
+    'sequence' : -100,
+    'description' : 'Hotel Management Software',
+    'category' : 'productivity',
+    'website' : 'https://www.tipskampus.wordpress.com',
+    'depends' : ['sale', 'mail'],
+    'data' : [
+        'security/ir.model.access.csv',
+		'data/data.xml',
+		'wizard/create_appointment_view.xml',
+        'views/patient_view.xml',
+		'views/sale.xml',
+		'views/appointment_view.xml',
+        'views/doctor_view.xml',
+        'views/employees.xml',
+        'views/room_view.xml',
+        'views/nurse_view.xml'
+    ],
+    'demo' : [],
+    'qweb' : [],
+    'installable' : True,
+    'application' : True,
+    'auto_install' : False,
+}
