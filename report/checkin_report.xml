@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_hospital_reservation">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h1><b>Invoice Check In</b></h1>
+                    <h4>
+                    <div class="row">
+                        <div class="col-4"><b>Reference</b></div>
+                        <div class="col-8"><span t-field="o.reservation_reference"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"><b>Name</b></div>
+                        <div class="col-8"><span t-field="o.patient_id"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"><b>Room</b></div>
+                        <div class="col-8"><span t-field="o.room_id"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"><b>Price</b></div>
+                        <div class="col-8"><span t-field="o.room_price"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"><b>Stay</b></div>
+                        <div class="col-8"><span t-field="o.estimated_stay"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"><b>Total</b></div>
+                        <div class="col-8"><span t-field="o.total_price"/></div>
+                    </div>
+                    </h4>
+                </div>
+            </t>
+        </t>
+    </t>    
+</template>    
+
+</odoo>

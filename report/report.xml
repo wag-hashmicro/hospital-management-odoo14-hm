@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_hospital_reservation" model="ir.actions.report">
+        <field name="name">Invoice Check In</field>
+        <field name="model">hospital.reservation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">om_hospital.report_hospital_reservation</field>
+        <field name="report_file">om_hospital.report_hospital_reservation</field>
+        <field name="binding_model_id" ref="model_hospital_reservation"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

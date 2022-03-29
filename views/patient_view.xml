@@ -15,19 +15,22 @@
 					name="%(om_hospital.action_create_appointment)d"
 					string="Create Appointment" class="btn-secondary" type="action"/>
 
-					<button id="button_confirm" name="action_confirm" confirm="Are you sure that need to Confirm ?"
-					string="Confirm" class="btn-primary" type="object" states="draft"/>
+                    <button id="button_appointment" name="action_appointment" confirm="Are you sure that will change to Appointment ?"
+					string="Appointment" class="btn-primary" type="object" states="checkup"/>
+
+					<button id="button_checkin" name="action_checkin" confirm="Are you sure that will change to Check In ?"
+					string="Check In" class="btn-primary" type="object" states="checkup"/>
 					
 					<button id="button_done" name="action_done" confirm="Are you sure that need to Mark as Done ?"
-					string="Mark As Done" class="btn-primary" type="object" states="confirm"/>
+					string="Mark As Done" class="btn-primary" type="object" states="checkin"/>
 					
-					<button id="button_draft" name="action_draft" confirm="Are you sure that need to Set to Draft ?"
-					string="Set To Draft" class="btn-primary" type="object" states="cancel"/>
+					<button id="button_checkup" name="action_checkup" confirm="Are you sure that will change to Check Up ?"
+					string="Check Up" class="btn-primary" type="object" states="cancel"/>
 					
 					<button id="button_cancel" name="action_cancel" confirm="Are you sure that need to Cancel ?"
-					string="Cancel" type="object" states="draft,done,confirm"/>
+					string="Cancel" type="object" states="checkup,appointment,done,checkin"/>
 						
-					<field name="state" widget="statusbar" statusbar_visible="draft,done,confirm"/>
+					<field name="state" widget="statusbar" statusbar_visible="checkup,appointment,done,checkin"/>
 				</header>			
                 <sheet>
                     <field name="image" widget="image" class="oe_avatar"/>
@@ -102,12 +105,13 @@
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <tree sample="1" 
-            decoration-info="state=='confirm'" 
+            decoration-info="state=='checkin'"
+            decoration-primary="state=='appointment'" 
             decoration-success="state=='done'" 
             decoration-danger="state=='cancel'" 
-            decoration-muted="state=='draft'">
+            decoration-muted="state=='checkup'">
                 <header>
-                    <button name="action_confirm" string="Confirm" class="btn-primary ml4" type="object"/>
+                    <button name="action_checkin" string="Check In" class="btn-primary ml4" type="object"/>
                     <button name="action_done" string="Done" class="btn-primary ml4" type="object"/>
                     <button name="action_cancel" string="Cancel" class="btn-danger ml4" type="object"/>
                 </header>

@@ -10,8 +10,8 @@ class HospitalPatient(models.Model):
 	_name = "hospital.patient"
 	_description = "Hospital Patient"
 	
-	reference = fields.Char(string="Patient Reference", required=True, copy=False, readonly=True,
-	default=lambda self: ('New'))
+	reference = fields.Char(string="Patient Reference", required=True, copy=False, readonly=True, 
+							default=lambda self: ('New'))
 	name = fields.Char(string='Name', required=True, tracking=True)
 	age = fields.Integer(string='Age', tracking=True)
 	gender = fields.Selection([
@@ -22,10 +22,10 @@ class HospitalPatient(models.Model):
 								default='male', 
 								tracking=True)
 	note = fields.Text(string='Description')
-	state =  fields.Selection([('draft', 'Draft'), ('confirm', 'Confirmed'), 
+	state =  fields.Selection([('checkup', 'Check Up'), ('appointment', 'Appointment'), ('checkin', 'Check In'), 
 								('done', 'Done'), ('cancel', 'Canceled')], 
 								tracking=True, 
-								default='draft', 
+								default='checkup', 
 								string='Status')
 	responsible_id = fields.Many2one('res.partner', string='Responsible')
 	appointment_count = fields.Integer(string='Total Appointment', compute='_compute_appointment_count')
@@ -51,11 +51,14 @@ class HospitalPatient(models.Model):
 		res['note'] = 'Default note value'
 		return res
 	
-	def action_confirm(self):
-		self.state = 'confirm'
+	def action_checkin(self):
+		self.state = 'checkin'
+
+	def action_appointment(self):
+		self.state = 'appointment'
 		
-	def action_draft(self):
-		self.state = 'draft'
+	def action_checkup(self):
+		self.state = 'checkup'
 		
 	def action_done(self):
 		self.state = 'done'

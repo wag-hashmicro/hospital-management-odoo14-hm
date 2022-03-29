@@ -9,8 +9,8 @@ class CreateAppointmentWizard(models.TransientModel):
 	order_reference = fields.Char(string="Order Reference", 
 									required=True, copy=False, readonly=True,
 									default=lambda self: _('New'))
-	patient_id = fields.Many2one('hospital.patient', string='Patient', required=True)
-	doctor_id = fields.Many2one('hospital.doctor', string='Doctor', required=True)
+	patient_id = fields.Many2one('hospital.patient', string='Patient')
+	doctor_id = fields.Many2one('hospital.doctor', string='Doctor')
 	age = fields.Integer(string='Age', related='patient_id.age',tracking=True)
 	responsible_id = fields.Many2one('res.partner', 
 									string='Responsible')

@@ -5,7 +5,7 @@ class HospitalRoom(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _name = 'hospital.room'
     _description = 'Hospital Room'
-    _rec_name = 'room_reference'
+    _rec_name = 'room_name'
 
     room_reference = fields.Char(string="Room Reference", 
 									required=True, copy=False, readonly=True,

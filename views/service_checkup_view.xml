@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- hospital.service.checkup tree view -->
+    <record id="hospital_service_checkup_view_tree" model="ir.ui.view">
+        <field name="name">hospital.service.checkup.view.tree</field>
+        <field name="model">hospital.service.checkup</field>
+        <field name="arch" type="xml">
+            <tree sample="1">
+                <!-- Add your fields here -->
+                <field name="service_reference"/>
+                <field name="name"/>
+                <field name="price"/>
+                <field name="note"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- hospital.service.checkup form view -->
+    <record id="hospital_service_checkup_view_form" model="ir.ui.view">
+        <field name="name">hospital.service.checkup.view.form</field>
+        <field name="model">hospital.service.checkup</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="service_reference" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="name"/>
+                        <field name="price"/>
+                    </group>
+                    <group>
+                        <field name="note"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- hospital.service.checkup action window -->
+    <record id="hospital_service_checkup_action" model="ir.actions.act_window">
+        <field name="name">Service Checkup</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.service.checkup</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first service checkup !
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="menu_service" 
+    name="Service" 
+    parent="menu_hospital_root" 
+    sequence="50"/>
+
+    <!-- This Menu Item Must have a parent and an action-->
+    <menuitem id="menu_service_checkup" 
+    name="Service Checkup" 
+    parent="menu_service"
+    action="hospital_service_checkup_action" 
+    sequence="10"/>
+</odoo>

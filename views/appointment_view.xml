@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <form create="false">
 				<header>
-                    <button id="button_create_appointment" 
+                    <button id="button_create_responsible" 
 					name="%(contacts.action_contacts)d"
 					string="Create Responsible" class="btn-secondary" type="action"/>
 
@@ -65,6 +65,10 @@
             group_edit="false" 
             group_delete="false"
             quick_create="false"
+            decoration-info="state=='confirm'" 
+            decoration-success="state=='done'" 
+            decoration-danger="state=='cancel'" 
+            decoration-muted="state=='draft'"
             archivable="false"
             class="o_kanban_mobile"
             default_group_by="doctor_id">
@@ -130,14 +134,9 @@
         </field>
     </record>
 
-    <menuitem id="menu_appointment_root"
-        name="Appointments"
-        parent="menu_hospital_root"
-        sequence="30"/>
-
     <menuitem id="menu_appointment"
         name="Appointments"
-        parent="menu_appointment_root"
+        parent="menu_checkup_root"
         action="action_appointment_patient"
-        sequence="10"/> 
+        sequence="20"/> 
 </odoo>

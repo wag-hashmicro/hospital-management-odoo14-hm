@@ -1,5 +1,13 @@
-from odoo import api, fields, models, _
+from odoo import api, fields, models, _, modules
+import base64
 
+def get_default_doctor_img():
+		with open(modules.get_module_resource('om_hospital', 'static/img', 'doctor.png'), 'rb') as f:
+			return base64.b64encode(f.read())
+
+def get_default_nurse_img():
+		with open(modules.get_module_resource('om_hospital', 'static/img', 'nurse.png'), 'rb') as f:
+			return base64.b64encode(f.read())
 
 class HospitalDoctor(models.Model):
     _name = 'hospital.doctor'
@@ -20,7 +28,7 @@ class HospitalDoctor(models.Model):
         ('other', 'Other'),
     ], required=True, default='male', tracking=True)
     note = fields.Text(string='Description')
-    image = fields.Binary(string='Doctor Image')
+    image = fields.Binary(string='Doctor Image', default=get_default_doctor_img())
 
     @api.model
     def create(self, vals):
@@ -48,7 +56,7 @@ class HospitalNurse(models.Model):
         ('other', 'Other'),
     ], required=True, default='male', tracking=True)
     note = fields.Text(string='Description')
-    image = fields.Binary(string='Nurse Image')
+    image = fields.Binary(string='Nurse Image', default=get_default_nurse_img())
 
     @api.model
     def create(self, vals):

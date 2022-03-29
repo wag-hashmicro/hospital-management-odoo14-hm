@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- hospital.reservation form view -->
+    <record id="hospital_reservation_view_form" model="ir.ui.view">
+        <field name="name">hospital.reservation.view.form</field>
+        <field name="model">hospital.reservation</field>
+        <field name="arch" type="xml">
+            <form create="false">
+                <header>
+                    <button id="button_confirm" name="action_confirm" confirm="Are you sure that need to Confirm ?"
+                    string="Confirm" class="btn-primary" type="object" states="draft"/>
+                    
+                    <button id="button_done" name="action_done" confirm="Are you sure that need to Mark as Done ?"
+                    string="Mark As Done" class="btn-primary" type="object" states="confirm"/>
+                    
+                    <button id="button_draft" name="action_draft" confirm="Are you sure that need to Set to Draft ?"
+                    string="Set To Draft" class="btn-primary" type="object" states="cancel"/>
+                    
+                    <button id="button_cancel" name="action_cancel" confirm="Are you sure that need to Cancel ?"
+                    string="Cancel" type="object" states="draft,done,confirm"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,confirm"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reservation_reference" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_reservation" widget="date"/>
+                            <field name="room_id" widget="selection"/>
+                            <field name="room_price"/>
+                            <field name="checkup_id" widget="selection"/>
+                            <field name="patient_id"/>
+                            <field name="responsible_id"/>
+                        </group>
+                        <group>
+                            <field name="estimated_stay"/>
+                            <field name="note"/>
+                            <field name="total_price"/>
+                        </group>                        
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- hospital.reservation tree view -->
+    <record id="hospital_reservation_view_tree" model="ir.ui.view">
+        <field name="name">hospital.reservation.view.tree</field>
+        <field name="model">hospital.reservation</field>
+        <field name="arch" type="xml">
+            <tree sample="1"
+            create="false" 
+            decoration-info="state=='confirm'" 
+            decoration-success="state=='done'" 
+            decoration-danger="state=='cancel'" 
+            decoration-muted="state=='draft'">
+                <field name="reservation_reference"/>
+                <field name="room_id"/>
+                <field name="patient_id"/>
+                <field name="estimated_stay"/>
+                <field name="total_price"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- hospital.reservation action window -->
+    <record id="hospital_reservation_action" model="ir.actions.act_window">
+        <field name="name">Room Check In</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.reservation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first room reservation ! 
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_reservation" 
+        name="Check In" 
+        parent="menu_room_root" 
+        action="hospital_reservation_action" 
+        sequence="10"/>
+</odoo>

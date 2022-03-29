@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- hospital.checkup form view -->
+    <record id="hospital_checkup_view_form" model="ir.ui.view">
+        <field name="name">hospital.checkup.view.form</field>
+        <field name="model">hospital.checkup</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="button_create_patient" 
+                    name="%(om_hospital.action_hospital_patient)d"
+                    string="Create Patient" class="btn-secondary" type="action"/>
+
+                    <button id="button_create_checkin" 
+					name="action_show_create_checkin"
+					string="Create Checkin" class="btn-secondary" type="object"/>
+
+                    <button id="button_confirm" name="action_confirm" confirm="Are you sure that need to Confirm ?"
+                    string="Confirm" class="btn-primary" type="object" states="draft"/>
+                    
+                    <button id="button_done" name="action_done" confirm="Are you sure that need to Mark as Done ?"
+                    string="Mark As Done" class="btn-primary" type="object" states="confirm"/>
+                    
+                    <button id="button_draft" name="action_draft" confirm="Are you sure that need to Set to Draft ?"
+                    string="Set To Draft" class="btn-primary" type="object" states="cancel"/>
+                    
+                    <button id="button_cancel" name="action_cancel" confirm="Are you sure that need to Cancel ?"
+                    string="Cancel" type="object" states="draft,done,confirm"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,confirm"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="checkup_reference" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_checkup"/>
+                            <field name="patient_id" widget="selection"/>
+                            <field name="responsible_id"/>
+                            <field name="inpatient"/>
+                        </group>
+                        <group>
+                            <field name="doctor_id" widget="selection"/>
+                            <field name="diagnoses"/>
+                            <field name="recipe"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Checkup Service">
+                            <field name="service_checkup_ids">
+                                <tree editable="bottom">
+                                    <field name="service_checkup_id" widget="selection"/>
+                                    <field name="price" sum="Total"/>
+                                </tree>
+                            </field>
+                        </page>                      
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- hospital.checkup tree view -->
+    <record id="hospital_checkup_view_tree" model="ir.ui.view">
+        <field name="name">hospital.checkup.view.tree</field>
+        <field name="model">hospital.checkup</field>
+        <field name="arch" type="xml">
+            <tree sample="1" 
+            decoration-info="state=='confirm'" 
+            decoration-success="state=='done'" 
+            decoration-danger="state=='cancel'" 
+            decoration-muted="state=='draft'">
+                <field name="checkup_reference"/>
+                <field name="patient_id" widget="selection"/>
+                <field name="doctor_id" widget="selection"/>
+                <field name="inpatient"/>
+                <field name="service_checkup_ids"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- hospital.checkup action window -->
+    <record id="hospital_checkup_action" model="ir.actions.act_window">
+        <field name="name">Checkup Patient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.checkup</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first checkup ! 
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="menu_checkup_root" 
+        name="Checkup" 
+        parent="menu_hospital_root" 
+        sequence="30"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_checkup" 
+        name="Checkup Patient" 
+        parent="menu_checkup_root" 
+        action="hospital_checkup_action" 
+        sequence="10"/>
+</odoo>
