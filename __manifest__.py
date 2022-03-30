@@ -13,6 +13,7 @@
 		'data/data.xml',
 		'wizard/create_appointment_view.xml',
         'wizard/create_checkin_view.xml',
+        'wizard/create_checkout_view.xml',
         'views/patient_view.xml',
         'views/doctor_view.xml',
         'views/employees.xml',

@@ -1,5 +1,5 @@
 from odoo import api, fields, models, _
-from datetime import datetime
+from datetime import date
 from odoo.exceptions import ValidationError
 
 class HospitalCheckout(models.Model):
@@ -10,14 +10,14 @@ class HospitalCheckout(models.Model):
 
     checkout_reference = fields.Char(string="Reference", required=True, copy=False, readonly=True, 
                                     default=lambda self: _('New'))
-    date_checkout = fields.Datetime(string="Date", default=datetime.now().date())
+    date_checkout = fields.Date(string="Date", default=date.today(), readonly=True)
     checkin_id = fields.Many2one('hospital.reservation',string='Check In')
     room_id = fields.Many2one(comodel_name='hospital.room', 
                             string='Room', related="checkin_id.room_id")
     room_price = fields.Integer(string='Price/Day', related='checkin_id.room_price')
     patient_id = fields.Many2one('hospital.patient', string='Patient', related="checkin_id.patient_id")
     responsible_id = fields.Many2one('res.partner', string='Responsible', related='checkin_id.responsible_id')
-    date_reservation = fields.Datetime(string="Date", related="checkin_id.date_reservation")
+    date_reservation = fields.Date(string="Date", related="checkin_id.date_reservation")
     note = fields.Char(string='Description')
     state =  fields.Selection([('draft', 'Draft'), ('confirm', 'Confirmed'), 
                                 ('done', 'Done'), ('cancel', 'Canceled')], 

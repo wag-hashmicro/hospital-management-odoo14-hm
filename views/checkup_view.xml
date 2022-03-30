@@ -5,7 +5,7 @@
         <field name="name">hospital.checkup.view.form</field>
         <field name="model">hospital.checkup</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="false">
                 <header>
                     <button id="button_create_patient" 
                     name="%(om_hospital.action_hospital_patient)d"
@@ -74,7 +74,8 @@
         <field name="name">hospital.checkup.view.tree</field>
         <field name="model">hospital.checkup</field>
         <field name="arch" type="xml">
-            <tree sample="1" 
+            <tree sample="1"
+            create="false" 
             decoration-info="state=='confirm'" 
             decoration-success="state=='done'" 
             decoration-danger="state=='cancel'" 

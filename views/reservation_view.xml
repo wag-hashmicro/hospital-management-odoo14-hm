@@ -7,6 +7,10 @@
         <field name="arch" type="xml">
             <form create="false">
                 <header>
+                    <button id="button_create_checkout" 
+					name="action_show_create_checkout"
+					string="Create Check Out" class="btn-secondary" type="object"/>
+
                     <button id="button_confirm" name="action_confirm" confirm="Are you sure that need to Confirm ?"
                     string="Confirm" class="btn-primary" type="object" states="draft"/>
                     
@@ -29,7 +33,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="date_reservation" widget="date"/>
+                            <field name="date_reservation"/>
                             <field name="room_id" widget="selection"/>
                             <field name="room_price"/>
                             <field name="checkup_id" widget="selection"/>

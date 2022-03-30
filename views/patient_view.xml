@@ -14,23 +14,14 @@
                     <button id="button_create_appointment" 
 					name="%(om_hospital.action_create_appointment)d"
 					string="Create Appointment" class="btn-secondary" type="action"/>
-
-                    <button id="button_appointment" name="action_appointment" confirm="Are you sure that will change to Appointment ?"
-					string="Appointment" class="btn-primary" type="object" states="checkup"/>
-
-					<button id="button_checkin" name="action_checkin" confirm="Are you sure that will change to Check In ?"
-					string="Check In" class="btn-primary" type="object" states="checkup"/>
 					
 					<button id="button_done" name="action_done" confirm="Are you sure that need to Mark as Done ?"
 					string="Mark As Done" class="btn-primary" type="object" states="checkin"/>
-					
-					<button id="button_checkup" name="action_checkup" confirm="Are you sure that will change to Check Up ?"
-					string="Check Up" class="btn-primary" type="object" states="cancel"/>
-					
+									
 					<button id="button_cancel" name="action_cancel" confirm="Are you sure that need to Cancel ?"
 					string="Cancel" type="object" states="checkup,appointment,done,checkin"/>
 						
-					<field name="state" widget="statusbar" statusbar_visible="checkup,appointment,done,checkin"/>
+					<field name="state" widget="statusbar" statusbar_visible="register,checkup,appointment,done,checkin"/>
 				</header>			
                 <sheet>
                     <field name="image" widget="image" class="oe_avatar"/>
@@ -109,10 +100,11 @@
             decoration-primary="state=='appointment'" 
             decoration-success="state=='done'" 
             decoration-danger="state=='cancel'" 
-            decoration-muted="state=='checkup'">
+            decoration-muted="state=='register'">
                 <header>
-                    <button name="action_checkin" string="Check In" class="btn-primary ml4" type="object"/>
-                    <button name="action_done" string="Done" class="btn-primary ml4" type="object"/>
+                    <button name="action_checkin" string="Check In" class="btn-secondary ml4" type="object"/>
+                    <button name="action_done" string="Done" class="btn-secondary ml4" type="object"/>
+                    <button name="action_register" string="Register" class="btn-secondary ml4" type="object"/>
                     <button name="action_cancel" string="Cancel" class="btn-danger ml4" type="object"/>
                 </header>
                 <field name="name"/>

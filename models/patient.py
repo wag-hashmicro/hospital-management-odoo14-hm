@@ -22,10 +22,10 @@ class HospitalPatient(models.Model):
 								default='male', 
 								tracking=True)
 	note = fields.Text(string='Description')
-	state =  fields.Selection([('checkup', 'Check Up'), ('appointment', 'Appointment'), ('checkin', 'Check In'), 
+	state =  fields.Selection([('register', 'Register'), ('checkup', 'Check Up'), ('appointment', 'Appointment'), ('checkin', 'Check In'), 
 								('done', 'Done'), ('cancel', 'Canceled')], 
 								tracking=True, 
-								default='checkup', 
+								default='register', 
 								string='Status')
 	responsible_id = fields.Many2one('res.partner', string='Responsible')
 	appointment_count = fields.Integer(string='Total Appointment', compute='_compute_appointment_count')
@@ -53,6 +53,9 @@ class HospitalPatient(models.Model):
 	
 	def action_checkin(self):
 		self.state = 'checkin'
+
+	def action_register(self):
+		self.state = 'register'
 
 	def action_appointment(self):
 		self.state = 'appointment'

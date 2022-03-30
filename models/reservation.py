@@ -1,5 +1,5 @@
 from odoo import api, fields, models, _
-from datetime import datetime
+from datetime import date
 
 class HospitalReservation(models.Model):
     _name = 'hospital.reservation'
@@ -9,7 +9,7 @@ class HospitalReservation(models.Model):
 
     reservation_reference = fields.Char(string="Reservation Reference", required=True, copy=False, readonly=True, 
                                         default=lambda self: _('New'))
-    date_reservation = fields.Datetime(string="Date", default=datetime.now().date(), readonly=True)
+    date_reservation = fields.Date(string="Date", default=date.today(), readonly=True)
     room_id = fields.Many2one('hospital.room', 
                             string='Room', 
                             domain=[('available','=', True)])
@@ -26,6 +26,16 @@ class HospitalReservation(models.Model):
                                 default='draft', 
                                 string='Status')
     
+    def action_show_create_checkout(self):
+        return {
+            "name": ("Create Check Out"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "create.checkout.wizard",
+            "target": "new",
+            "views": [[self.env.ref('om_hospital.view_create_checkout_form').id, "form"]],
+        }
+
     @api.model
     def create(self, vals): 
         if not vals.get('note'):

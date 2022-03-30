@@ -1,7 +1,6 @@
 from datetime import datetime
 from odoo import api, fields, models, _
 
-
 class HospitalCheckup(models.Model):
     _name = 'hospital.checkup'
     _inherit = ['mail.thread', 'mail.activity.mixin']
