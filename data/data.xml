@@ -59,7 +59,7 @@
 		<record id="seq_hospital_reservation" model="ir.sequence">
 			<field name="name">Reservation Sequence</field>
 			<field name="code">hospital.reservation</field>
-			<field name="prefix">RV</field>
+			<field name="prefix">CI</field>
 			<field name="padding">5</field>
 			<field name="company_id" eval="False"/>
 		</record>
@@ -77,7 +77,25 @@
 		<record id="seq_hospital_checkout" model="ir.sequence">
 			<field name="name">Check Out Sequence</field>
 			<field name="code">hospital.checkout</field>
-			<field name="prefix">SC</field>
+			<field name="prefix">CO</field>
+			<field name="padding">5</field>
+			<field name="company_id" eval="False"/>
+		</record>
+
+		<!-- Sequences for hospital change room-->
+		<record id="seq_hospital_change_room" model="ir.sequence">
+			<field name="name">Change Room Sequence</field>
+			<field name="code">hospital.change.room</field>
+			<field name="prefix">CR</field>
+			<field name="padding">5</field>
+			<field name="company_id" eval="False"/>
+		</record>
+
+		<!-- Sequences for hospital cleaning service-->
+		<record id="seq_hospital_cleaning_service" model="ir.sequence">
+			<field name="name">Cleaning Service Sequence</field>
+			<field name="code">hospital.cleaning.service</field>
+			<field name="prefix">CLS</field>
 			<field name="padding">5</field>
 			<field name="company_id" eval="False"/>
 		</record>

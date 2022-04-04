@@ -6,3 +6,4 @@ from . import reservation
 from . import checkup
 from . import service_checkup
 from . import checkout
+from . import change_room

@@ -6,20 +6,12 @@
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <form>
-				<header>
-                    <button id="button_create_appointment" 
-					name="%(contacts.action_contacts)d"
-					string="Create Responsible" class="btn-secondary" type="action"/>
-
-                    <button id="button_create_appointment" 
-					name="%(om_hospital.action_create_appointment)d"
-					string="Create Appointment" class="btn-secondary" type="action"/>
-					
+				<header>				
 					<button id="button_done" name="action_done" confirm="Are you sure that need to Mark as Done ?"
 					string="Mark As Done" class="btn-primary" type="object" states="checkin"/>
 									
 					<button id="button_cancel" name="action_cancel" confirm="Are you sure that need to Cancel ?"
-					string="Cancel" type="object" states="checkup,appointment,done,checkin"/>
+					string="Cancel" type="object" states="checkup,appointment,done,checkin,checkout"/>
 						
 					<field name="state" widget="statusbar" statusbar_visible="register,checkup,appointment,done,checkin"/>
 				</header>			
@@ -48,6 +40,15 @@
                     <field name="activity_ids"/>
                     <field name="message_ids"/>
                 </div>
+                <footer>
+                    <button id="button_create_appointment" 
+					name="%(contacts.action_contacts)d"
+					string="Create Responsible" class="btn-secondary ml4" type="action"/>
+
+                    <button id="button_create_appointment" 
+					name="%(wag_hospital.action_create_appointment)d"
+					string="Create Appointment" class="btn-secondary ml4" type="action"/>
+                </footer>
             </form>
         </field>
     </record>

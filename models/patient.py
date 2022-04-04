@@ -2,7 +2,7 @@ from odoo import api, fields, models, modules
 import base64
 
 def get_default_patient_img():
-		with open(modules.get_module_resource('om_hospital', 'static/img', 'patient.png'), 'rb') as f:
+		with open(modules.get_module_resource('wag_hospital', 'static/img', 'patient.png'), 'rb') as f:
 			return base64.b64encode(f.read())
 
 class HospitalPatient(models.Model):
@@ -23,7 +23,7 @@ class HospitalPatient(models.Model):
 								tracking=True)
 	note = fields.Text(string='Description')
 	state =  fields.Selection([('register', 'Register'), ('checkup', 'Check Up'), ('appointment', 'Appointment'), ('checkin', 'Check In'), 
-								('done', 'Done'), ('cancel', 'Canceled')], 
+								('done', 'Done'), ('cancel', 'Canceled'), ('checkout', 'Check Out')], 
 								tracking=True, 
 								default='register', 
 								string='Status')
@@ -53,6 +53,9 @@ class HospitalPatient(models.Model):
 	
 	def action_checkin(self):
 		self.state = 'checkin'
+
+	def action_checkout(self):
+		self.state = 'checkout'
 
 	def action_register(self):
 		self.state = 'register'

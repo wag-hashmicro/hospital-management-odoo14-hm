@@ -134,18 +134,18 @@
         name="All Rooms"
         parent="menu_room_root"
         action="hospital_room_action"
-        sequence="30"/>
+        sequence="40"/>
 
     <menuitem id="menu_room_available"
         name="Available Rooms"
         parent="menu_room_root"
         action="hospital_room_available_action"
-        sequence="40"/>
+        sequence="50"/>
 
     <menuitem id="menu_room_reserved"
         name="Reserved Rooms"
         parent="menu_room_root"
         action="hospital_room_reserved_action"
-        sequence="50"/>
+        sequence="60"/>
 
 </odoo>

@@ -9,7 +9,7 @@ class HospitalReservation(models.Model):
 
     reservation_reference = fields.Char(string="Reservation Reference", required=True, copy=False, readonly=True, 
                                         default=lambda self: _('New'))
-    date_reservation = fields.Date(string="Date", default=date.today(), readonly=True)
+    date_reservation = fields.Date(string="Date", default=fields.Date.today(), readonly=True)
     room_id = fields.Many2one('hospital.room', 
                             string='Room', 
                             domain=[('available','=', True)])
@@ -17,8 +17,6 @@ class HospitalReservation(models.Model):
     room_price = fields.Integer(string='Price/Day', related='room_id.price')
     patient_id = fields.Many2one('hospital.patient', string='Patient')
     responsible_id = fields.Many2one('res.partner', string='Responsible', related='patient_id.responsible_id')
-    estimated_stay = fields.Integer(string='Estimated Stay')
-    total_price = fields.Integer(compute='_price_compute', string='Total')
     note = fields.Char(string='Description')
     state =  fields.Selection([('draft', 'Draft'), ('confirm', 'Confirmed'), 
                                 ('done', 'Done'), ('cancel', 'Canceled')], 
@@ -32,10 +30,11 @@ class HospitalReservation(models.Model):
             "type": "ir.actions.act_window",
             "view_mode": "form",
             "res_model": "create.checkout.wizard",
+            "context" : {'default_date_reservation': self.date_reservation},
             "target": "new",
-            "views": [[self.env.ref('om_hospital.view_create_checkout_form').id, "form"]],
+            "views": [[self.env.ref('wag_hospital.view_create_checkout_form').id, "form"]],
         }
-
+    
     @api.model
     def create(self, vals): 
         if not vals.get('note'):
@@ -54,11 +53,6 @@ class HospitalReservation(models.Model):
             self.env['hospital.room'].search([('id','=',record.room_id.id)]).write({'available':True})
             self.env['hospital.patient'].search([('id','=',record.patient_id.id)]).write({'state':'done'})
         record = super(HospitalReservation, self).unlink()
-
-    @api.depends('estimated_stay', 'room_price')
-    def _price_compute(self):
-        for record in self:
-            record.total_price = record.estimated_stay * record.room_price
 
     def action_confirm(self):
         self.state = 'confirm'

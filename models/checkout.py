@@ -1,6 +1,5 @@
 from odoo import api, fields, models, _
 from datetime import date
-from odoo.exceptions import ValidationError
 
 class HospitalCheckout(models.Model):
     _name = 'hospital.checkout'
@@ -10,8 +9,8 @@ class HospitalCheckout(models.Model):
 
     checkout_reference = fields.Char(string="Reference", required=True, copy=False, readonly=True, 
                                     default=lambda self: _('New'))
-    date_checkout = fields.Date(string="Date", default=date.today(), readonly=True)
-    checkin_id = fields.Many2one('hospital.reservation',string='Check In')
+    date_checkout = fields.Date(string="Date", default=fields.Date.today(), readonly=True)
+    checkin_id = fields.Many2one('hospital.reservation',string='Check In ID')
     room_id = fields.Many2one(comodel_name='hospital.room', 
                             string='Room', related="checkin_id.room_id")
     room_price = fields.Integer(string='Price/Day', related='checkin_id.room_price')
@@ -41,7 +40,7 @@ class HospitalCheckout(models.Model):
         record = super(HospitalCheckout, self).create(vals)
         if record.date_checkout:
             self.env['hospital.room'].search([('id','=',record.room_id.id)]).write({'available':True})
-            self.env['hospital.patient'].search([('id','=',record.patient_id.id)]).write({'state':'done'})
+            self.env['hospital.patient'].search([('id','=',record.patient_id.id)]).write({'state':'checkout'})
             self.env['hospital.reservation'].search([('id','=',record.checkin_id.id)]).write({'state':'done'})
         return record
 

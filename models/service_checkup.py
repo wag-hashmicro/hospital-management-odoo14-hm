@@ -3,6 +3,7 @@ from odoo import api, fields, models, _
 
 class HospitalServiceCheckup(models.Model):
     _name = 'hospital.service.checkup'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Hospital Service Check Up'
     
     service_reference = fields.Char(string="Reference", required=True, copy=False, readonly=True, 

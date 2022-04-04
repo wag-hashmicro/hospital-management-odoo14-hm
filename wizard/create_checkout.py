@@ -1,4 +1,5 @@
 from odoo import api, models, fields, _
+from odoo.exceptions import ValidationError
 from datetime import date
 
 class CreateCheckoutWizard(models.TransientModel):
@@ -7,23 +8,34 @@ class CreateCheckoutWizard(models.TransientModel):
 
     checkout_reference = fields.Char(string="Reference", required=True, copy=False, readonly=True, 
                                     default=lambda self: _('New'))
-    date_checkout = fields.Date(string="Date", default=date.today(), readonly=True)
+    date_checkout = fields.Date(string="Date", default=fields.Date.today(), readonly=True, force_save=True)
     checkin_id = fields.Many2one('hospital.reservation',string='Check In')
     room_id = fields.Many2one(comodel_name='hospital.room', 
                             string='Room', related="checkin_id.room_id")
     room_price = fields.Integer(string='Price/Day', related='checkin_id.room_price')
     patient_id = fields.Many2one('hospital.patient', string='Patient', related="checkin_id.patient_id")
     responsible_id = fields.Many2one('res.partner', string='Responsible', related='checkin_id.responsible_id')
-    date_reservation = fields.Date(string="Date", related="checkin_id.date_reservation")
+    date_reservation = fields.Date(string="Date Check In", readonly=True)
     note = fields.Char(string='Description')
     
-    stay = fields.Integer(string='Length of Stay')    
+    stay = fields.Integer(compute='_stay_compute', string='Length of Stay')    
     total_price = fields.Integer(compute='_price_compute', string='Total')
 
     @api.depends('stay', 'room_price')
     def _price_compute(self):
         for record in self:
             record.total_price = record.stay * record.room_price
+
+    @api.depends('date_reservation', 'date_checkout')
+    def _stay_compute(self):
+        for record in self:
+            if record.date_reservation < record.date_checkout:
+                raise ValidationError('Start date should not greater than end date.')
+            else:
+                length_stay = int((record.date_checkout - record.date_reservation).days)
+                if length_stay == 0:
+                    length_stay = 1
+                record.stay = length_stay
 
     def action_create_checkout(self):
         vals = {           
@@ -49,5 +61,5 @@ class CreateCheckoutWizard(models.TransientModel):
         
     def action_view_checkout(self):
         #Method-1
-        action = self.env.ref('om_hospital.hospital_checkout_action').read()[0]
+        action = self.env.ref('wag_hospital.hospital_checkout_action').read()[0]
         return action

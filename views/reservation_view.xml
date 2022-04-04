@@ -9,7 +9,11 @@
                 <header>
                     <button id="button_create_checkout" 
 					name="action_show_create_checkout"
-					string="Create Check Out" class="btn-secondary" type="object"/>
+					string="Check Out" class="btn-secondary" type="object"/>
+
+                    <button id="button_create_change_room" 
+					name="%(wag_hospital.action_create_change_room)d"
+					string="Create Change Room" class="btn-secondary ml4" type="action"/>
 
                     <button id="button_confirm" name="action_confirm" confirm="Are you sure that need to Confirm ?"
                     string="Confirm" class="btn-primary" type="object" states="draft"/>
@@ -34,16 +38,14 @@
                     <group>
                         <group>
                             <field name="date_reservation"/>
-                            <field name="room_id" widget="selection"/>
-                            <field name="room_price"/>
                             <field name="checkup_id" widget="selection"/>
                             <field name="patient_id"/>
                             <field name="responsible_id"/>
                         </group>
                         <group>
-                            <field name="estimated_stay"/>
+                            <field name="room_id" widget="selection"/>
+                            <field name="room_price"/>
                             <field name="note"/>
-                            <field name="total_price"/>
                         </group>                        
                     </group>
                 </sheet>
@@ -70,8 +72,6 @@
                 <field name="reservation_reference"/>
                 <field name="room_id"/>
                 <field name="patient_id"/>
-                <field name="estimated_stay"/>
-                <field name="total_price"/>
                 <field name="state"/>
             </tree>
         </field>

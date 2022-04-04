@@ -18,6 +18,7 @@ class HospitalCheckup(models.Model):
     patient_id = fields.Many2one('hospital.patient', string='Patient')
     responsible_id = fields.Many2one('res.partner', string='Responsible', related='patient_id.responsible_id')
     doctor_id = fields.Many2one('hospital.doctor', string='Doctor')
+    nurse_id = fields.Many2one(comodel_name='hospital.nurse', string='Nurse')
     diagnoses = fields.Text(string='Diagnoses')
     recipe = fields.Char(string='Recipe')
     inpatient = fields.Boolean(string='Inpatient')
@@ -63,7 +64,7 @@ class HospitalCheckup(models.Model):
             "view_mode": "form",
             "res_model": "create.checkin.wizard",
             "target": "new",
-            "views": [[self.env.ref('om_hospital.view_create_checkin_form').id, "form"]],
+            "views": [[self.env.ref('wag_hospital.view_create_checkin_form').id, "form"]],
         }
     
 class HospitalServiceCheckupDetail(models.Model):

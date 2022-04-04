@@ -5,7 +5,7 @@ class CreateAppointmentWizard(models.TransientModel):
 	_name = "create.appointment.wizard"
 	_description = "Create Appoinment Wizard"
 	
-	date_appointment = fields.Date(string="Date", default=datetime.today(), readonly=True)
+	date_appointment = fields.Date(string="Date", default=fields.Date.today(), readonly=True)
 	order_reference = fields.Char(string="Order Reference", 
 									required=True, copy=False, readonly=True,
 									default=lambda self: _('New'))
@@ -24,8 +24,6 @@ class CreateAppointmentWizard(models.TransientModel):
 								tracking=True)
 	note = fields.Text(string='Description')
 	
-	
-
 	def action_create_appointment(self):
 		print('Button Clicked')
 		vals = {
@@ -48,11 +46,11 @@ class CreateAppointmentWizard(models.TransientModel):
 		
 	def action_view_appointment(self):
 		#Method-1
-		action = self.env.ref('om_hospital.action_appointment_patient').read()[0]
+		action = self.env.ref('wag_hospital.action_appointment_patient').read()[0]
 		return action
 		
 		#Method-2
-		#action = self.env['ir.actions.actions']._for_xml_id('om_hospital.action_appointment_patient')
+		#action = self.env['ir.actions.actions']._for_xml_id('wag_hospital.action_appointment_patient')
 		#action['domain'] = [('patient_id', '=', self.patient_id.id)]
 		#return action
 		

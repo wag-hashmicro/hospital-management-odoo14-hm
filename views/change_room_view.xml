@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- hospital.change.room form view -->
+    <record id="hospital_change_room_view_form" model="ir.ui.view">
+        <field name="name">hospital.change.room.view.form</field>
+        <field name="model">hospital.change.room</field>
+        <field name="arch" type="xml">
+            <form edit="false" create="false">
+                <header>
+					<button id="button_confirm" name="action_confirm" confirm="Are you sure that need to Confirm ?"
+					string="Confirm" class="btn-primary" type="object" states="draft"/>
+					
+					<button id="button_done" name="action_done" confirm="Are you sure that need to Mark as Done ?"
+					string="Mark As Done" class="btn-primary" type="object" states="confirm"/>
+					
+					<button id="button_draft" name="action_draft" confirm="Are you sure that need to Set to Draft ?"
+					string="Set To Draft" class="btn-primary" type="object" states="cancel"/>
+					
+					<button id="button_cancel" name="action_cancel" confirm="Are you sure that need to Cancel ?"
+					string="Cancel" type="object" states="draft,done,confirm"/>
+					
+					<field name="state" widget="statusbar" statusbar_visible="draft,done,confirm"/>
+				</header>
+                <sheet>
+                    <div class="oe_title">
+						<h1>
+							<field name="change_room_reference"/>
+						</h1>
+					</div>
+                    <group>
+                        <field name="date_change_room"/>
+                        <field name="checkin_id" widget="selection"/>
+                        <field name="patient_id"/>
+                        <field name="responsible_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Check Out From">
+                            <group>
+                                <group>
+                                    <field name="date_checkin"/>
+                                    <field name="room_id_old" widget="selection"/>
+                                    <field name="room_price_old"/>
+                                </group>
+                                <group>
+                                    <field name="stay_old"/>
+                                    <field name="total_price_old"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Check In To">
+                            <group>
+                                <group>
+                                    <field name="room_id_new" widget="selection"/>
+                                    <field name="room_price_new"/>
+                                    <field name="note"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- hospital.change.room tree view -->
+    <record id="hospital_change_room_view_tree" model="ir.ui.view">
+        <field name="name">hospital.change.room.view.tree</field>
+        <field name="model">hospital.change.room</field>
+        <field name="arch" type="xml">
+            <tree sample="1"
+            edit="false"
+            create="false"
+            decoration-info="state=='confirm'" 
+            decoration-success="state=='done'" 
+            decoration-danger="state=='cancel'" 
+            decoration-muted="state=='draft'">
+                <!-- Add your fields here -->
+                <field name="change_room_reference"/>
+                <field name="checkin_id"/>
+                <field name="patient_id"/>
+                <field name="room_id_old"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- hospital.change.room action window -->
+    <record id="hospital_change_room_action" model="ir.actions.act_window">
+        <field name="name">Change Room</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.change.room</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No patient has ever moved rooms ! 
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_change_room" 
+    name="Change Room" 
+    parent="menu_room_root" 
+    action="hospital_change_room_action" 
+    sequence="30"/>
+</odoo>

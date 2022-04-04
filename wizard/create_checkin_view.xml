@@ -16,13 +16,11 @@
 						<field name="checkup_id" widget="selection"/>
 						<field name="patient_id"/>						
 						<field name="responsible_id" widget="selection"/>
-                        <field name="room_id" widget="selection"/>
-                        <field name="room_price"/>
 					</group>
 					<group>
-						<field name="estimated_stay"/>
+						<field name="room_id" widget="selection"/>
+                        <field name="room_price"/>
 						<field name="note"/>
-						<field name="total_price"/>
 					</group>
 				</group>	
 				<footer>

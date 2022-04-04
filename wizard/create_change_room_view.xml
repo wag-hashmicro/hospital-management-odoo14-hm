@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="view_create_change_room_form" model="ir.ui.view">
+		<field name="name">create.change.room.wizard.form</field>
+		<field name="model">create.change.room.wizard</field>
+		<field name="arch" type="xml">
+			<form edit="false">
+                <sheet>
+                    <div class="oe_title">
+						<h1>
+							<field name="change_room_reference"/>
+						</h1>
+					</div>
+                    <group>
+                        <field name="date_change_room"/>
+                        <field name="checkin_id" widget="selection"/>
+                        <field name="patient_id"/>
+                        <field name="responsible_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Check Out From">
+                            <group>
+                                <group>
+                                    <field name="date_checkin"/>
+                                    <field name="room_id_old" widget="selection"/>
+                                    <field name="room_price_old"/>
+                                </group>
+                                <group>
+                                    <field name="stay_old"/>
+                                    <field name="total_price_old"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Check In To">
+                            <group>
+                                <group>
+                                    <field name="room_id_new" widget="selection"/>
+                                    <field name="room_price_new"/>
+                                    <field name="note"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+					<button name="action_create_change_room" type="object"
+					string="Create" class="btn-primary"/>
+					<button string="Cancel" special="cancel"/>
+					<button name="action_view_change_room" type="object"
+					string="View Change Room" class="btn-secondary"/>
+				</footer>
+            </form>
+		</field>
+	</record>
+
+    <record id="action_create_change_room" model="ir.actions.act_window">
+		<field name="name">Create Change Room</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">create.change.room.wizard</field>
+		<field name="view_mode">form</field>
+		<field name="context">{'default_checkin_id': active_id}</field>
+		<field name="view_id" ref="view_create_change_room_form"/>
+		<field name="target">new</field>
+	</record>
+</odoo>

@@ -12,3 +12,6 @@ access_hospital_service_checkup,access.hospital.service.checkup,model_hospital_s
 access_hospital_service_checkup_detail,access.hospital.service.checkup.detail,model_hospital_service_checkup_detail,,1,1,1,1
 access_hospital_checkout,access.hospital.checkout,model_hospital_checkout,,1,1,1,1
 access_create_checkout_wizard,access.create.checkout.wizard,model_create_checkout_wizard,,1,1,1,1
+access_hospital_change_room,access.hospital.change.room,model_hospital_change_room,,1,1,1,1
+access_hospital_cleaning_service,access.hospital.cleaning.service,model_hospital_cleaning_service,,1,1,1,1
+access_create_change_room_wizard,access.create.change.room.wizard,model_create_change_room_wizard,,1,1,1,1

@@ -26,10 +26,8 @@ class HospitalAppointment(models.Model):
                                 default='male', 
                                 related='patient_id.gender', 
                                 tracking=True)
-    date_appointment = fields.Date(string="Date", default=datetime.today(), readonly=True)
-    date_checkup = fields.Datetime(string="Check Up Time")
-    
-    
+    date_appointment = fields.Date(string="Date", default=fields.Date.today(), readonly=True)
+    date_checkup = fields.Datetime(string="Check Up Time") 
     
     @api.model
     def create(self, vals):

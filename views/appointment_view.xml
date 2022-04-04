@@ -7,10 +7,6 @@
         <field name="arch" type="xml">
             <form create="false">
 				<header>
-                    <button id="button_create_responsible" 
-					name="%(contacts.action_contacts)d"
-					string="Create Responsible" class="btn-secondary" type="action"/>
-
 					<button id="button_confirm" name="action_confirm" confirm="Are you sure that need to Confirm ?"
 					string="Confirm" class="btn-primary" type="object" states="draft"/>
 					
@@ -47,6 +43,11 @@
                         </group>
                     </group>
                 </sheet>
+                <footer>
+                    <button id="button_create_responsible" 
+					name="%(contacts.action_contacts)d"
+					string="Create Responsible" class="btn-secondary ml4" type="action"/>
+                </footer>
 				<div class="oe_chatter">
                     <field name="message_follower_ids"/>
                     <field name="activity_ids"/>
